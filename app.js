@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const morgan = require('morgan');
 const app = express();
 const port = 8000;
 
@@ -8,7 +9,6 @@ const port = 8000;
 // })
 
 // middleware
-
 app.use((req, res, next)=>{
     console.log("Hello from middleware :)");
     req.requestAt = new Date().toISOString();
@@ -16,6 +16,7 @@ app.use((req, res, next)=>{
 })
 
 app.use(express.json());
+app.use(morgan("dev"))
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`, 'utf-8'))
 
