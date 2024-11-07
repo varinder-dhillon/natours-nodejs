@@ -80,6 +80,27 @@ app.patch("/api/v1/tours/:id", (req, res)=>{
     })
 })
 
+app.delete("/api/v1/tours/:id", (req, res)=>{
+    
+    const id = req.params.id * 1;
+    const tour = tours.find(item => item.id === id);
+
+    if(!tour){
+        res.status(404).json({
+            status: "fail",
+            message: "Tour not found!!!"
+        })
+    }
+    
+    res.status(200).json({
+        status: 'Tour Deleted!!!',
+        result: tours.length,
+        data: {
+            tour : null
+        }
+    })
+})
+
 app.listen(port, ()=>{
     console.log("App is running on port:"+port);
 })
