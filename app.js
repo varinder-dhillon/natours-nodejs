@@ -7,6 +7,14 @@ const port = 8000;
 //     res.status(200).send("Hello from the server side!!!")
 // })
 
+// middleware
+
+app.use((req, res, next)=>{
+    console.log("Hello from middleware :)");
+    req.requestAt = new Date().toISOString();
+    next();    
+})
+
 app.use(express.json());
 
 const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simple.json`, 'utf-8'))
@@ -14,6 +22,7 @@ const tours = JSON.parse(fs.readFileSync(`${__dirname}/dev-data/data/tours-simpl
 const getAllTours = (req, res)=>{
     res.status(200).json({
         status: 'success',
+        requestAt: req.requestAt,
         result: tours.length,
         data: {
             tours
